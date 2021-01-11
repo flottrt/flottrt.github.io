@@ -1,112 +1,112 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
-        <meta name="mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <link rel="stylesheet" href="./resources/ol.css">
-        <link rel="stylesheet" href="resources/fontawesome-all.min.css">
-        <link rel="stylesheet" href="./resources/ol-layerswitcher.css">
-        <link rel="stylesheet" href="./resources/qgis2web.css">
-<style>
-.search-layer {
-  top: 100px;
-  left: .5em;
-}
-.ol-touch .search-layer {
-  top: 130px;
-}
-</style>
-        <style>
-        html, body {
-            background-color: #ffffff;
-        }
-        .ol-control button {
-            background-color: #f8f8f8 !important;
-            color: #000000 !important;
-            border-radius: 0px !important;
-        }
-        .ol-zoom, .geolocate, .gcd-gl-control .ol-control {
-            background-color: rgba(255,255,255,.4) !important;
-            padding: 3px !important;
-        }
-        .ol-scale-line {
-            background: none !important;
-        }
-        .ol-scale-line-inner {
-            border: 2px solid #f8f8f8 !important;
-            border-top: none !important;
-            background: rgba(255, 255, 255, 0.5) !important;
-            color: black !important;
-        }
-        </style>
-<style>
-.tooltip {
-  position: relative;
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 4px;
-  color: white;
-  padding: 4px 8px;
-  opacity: 0.7;
-  white-space: nowrap;
-}
-.tooltip-measure {
-  opacity: 1;
-  font-weight: bold;
-}
-.tooltip-static {
-  background-color: #ffcc33;
-  color: black;
-  border: 1px solid white;
-}
-.tooltip-measure:before,
-.tooltip-static:before {
-  border-top: 6px solid rgba(0, 0, 0, 0.5);
-  border-right: 6px solid transparent;
-  border-left: 6px solid transparent;
-  content: "";
-  position: absolute;
-  bottom: -6px;
-  margin-left: -7px;
-  left: 50%;
-}
-.tooltip-static:before {
-  border-top-color: #ffcc33;
-}
-.measure-control {
-  top: 65px;
-  left: .5em;
-}
-.ol-touch .measure-control {
-  top: 80px;
-}
-</style>
-        <style>
-        #map {
-            width: 1178px;
-            height: 852px;
-        }
-        </style>
-        <title></title>
-    </head>
-    <body>
-        <div id="map">
-            <div id="popup" class="ol-popup">
-                <a href="#" id="popup-closer" class="ol-popup-closer"></a>
-                <div id="popup-content"></div>
-            </div>
-        </div>
-        <script src="resources/qgis2web_expressions.js"></script>
-        <script src="resources/polyfills.js"></script>
-        <script src="./resources/functions.js"></script>
-        <script src="./resources/ol.js"></script>
-        <script src="./resources/ol-layerswitcher.js"></script>
-        <script src="layers/Hutresen2009_1.js"></script><script src="layers/Hutresen2011_2.js"></script><script src="layers/Rcifen2009_3.js"></script><script src="layers/Rcifen2011_4.js"></script><script src="layers/Rcifen2013_5.js"></script><script src="layers/Rcifen2014_6.js"></script><script src="layers/Rcifen2017_7.js"></script><script src="layers/Rcifen2019_8.js"></script>
-        <script src="styles/Hutresen2009_1_style.js"></script><script src="styles/Hutresen2011_2_style.js"></script><script src="styles/Rcifen2009_3_style.js"></script><script src="styles/Rcifen2011_4_style.js"></script><script src="styles/Rcifen2013_5_style.js"></script><script src="styles/Rcifen2014_6_style.js"></script><script src="styles/Rcifen2017_7_style.js"></script><script src="styles/Rcifen2019_8_style.js"></script>
-        <script src="./layers/layers.js" type="text/javascript"></script> 
-        <script src="./resources/Autolinker.min.js"></script>
-        <script src="./resources/qgis2web.js"></script>
-    </body>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>TDB</title>
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<link rel="stylesheet" type="text/css" href="./Qgis2threejs.css">
+<script src="./threejs/three.min.js"></script>
+<script src="./threejs/OrbitControls.js"></script>
+<script src="./Qgis2threejs.js"></script>
+</head>
+<body>
+<div id="view">
+  <div id="labels"></div>
+  <div id="northarrow"></div>
+</div>
+
+<!-- popup -->
+<div id="popup">
+  <div id="closebtn">&times;</div>
+  <div id="popupbar"></div>
+  <div id="popupbody">
+    <div id="popupcontent"></div>
+
+    <!-- query result -->
+    <div id="queryresult">
+      <table id="qr_layername_table">
+        <caption>Layer name</caption>
+        <tr><td id="qr_layername"></td></tr>
+      </table>
+
+      <table id="qr_coords_table">
+        <caption>Clicked coordinates</caption>
+        <tr><td id="qr_coords"></td></tr>
+      </table>
+
+      <!-- camera actions -->
+      <div class="action-btn action-zoom" onclick="app.cameraAction.zoomIn(); app.closePopup();">Zoom in here</div>
+      <div class="action-btn action-move" onclick="app.cameraAction.move(); app.closePopup();">Move here</div>
+      <div class="action-btn action-orbit" onclick="app.cameraAction.orbit(); app.closePopup();">Orbit around here</div>
+
+      <!-- attributes -->
+      <table id="qr_attrs_table">
+        <caption>Attributes</caption>
+      </table>
+    </div>
+
+    <!-- page info -->
+    <div id="pageinfo">
+      <h1>Current View URL</h1>
+      <div><input id="urlbox" type="text"></div>
+
+      <h1>Usage</h1>
+      <table id="usage">
+        <tr><td colspan="2" class="star">Mouse</td></tr>
+        <tr><td>Left button + Move</td><td>Orbit</td></tr>
+        <tr><td>Mouse Wheel</td><td>Zoom</td></tr>
+        <tr><td>Right button + Move</td><td>Pan</td></tr>
+
+        <tr><td colspan="2" class="star">Keys</td></tr>
+        <tr><td>Arrow keys</td><td>Move Horizontally</td></tr>
+        <tr><td>Shift + Arrow keys</td><td>Orbit</td></tr>
+        <tr><td>Ctrl + Arrow keys</td><td>Rotate</td></tr>
+        <tr><td>Shift + Ctrl + Up / Down</td><td>Zoom In / Out</td></tr>
+        <tr><td>L</td><td>Toggle Label Visibility</td></tr>
+        <tr><td>R</td><td>Start / Stop Rotate Animation (Orbiting)</td></tr>
+        <tr><td>W</td><td>Wireframe Mode</td></tr>
+        <tr><td>Shift + R</td><td>Reset Camera Position</td></tr>
+        <tr><td>Shift + S</td><td>Save Image</td></tr>
+      </table>
+
+      <h1>About</h1>
+      <div id="about">
+        This page was made with <a href="https://www.qgis.org/" target="_blank">QGIS</a> and <a href="https://github.com/minorua/Qgis2threejs" target="_blank">Qgis2threejs</a> plugin.
+        Dependent JavaScript libraries are
+        <a href="https://threejs.org/" target="_blank">three.js</a>
+        <span id="lib_proj4js"> and <a href="https://trac.osgeo.org/proj4js/" target="_blank">Proj4js</a></span>
+        .
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- progress bar -->
+<div id="progress"><div id="bar"></div></div>
+
+<!-- header and footer -->
+<div id="header"></div>
+<div id="footer"><span id="infobtn"><img src="./Qgis2threejs.png"></span> </div>
+
+<script>
+Q3D.Config.allVisible = true;
+Q3D.Config.localMode = true;
+if (typeof proj4 === "undefined") document.getElementById("lib_proj4js").style.display = "none";
+
+var app = Q3D.application,
+    container = document.getElementById("view");
+
+app.init(container);           // initialize application
+
+// load the scene
+app.loadSceneFile("./data/index/scene.js", function () {
+  app.start();
+
+  // North arrow inset
+  if (Q3D.Config.northArrow.visible) app.buildNorthArrow(document.getElementById("northarrow"), app.scene.userData.rotation);
+});
+
+document.getElementById("infobtn").onclick = app.showInfo.bind(app);
+</script>
+</body>
 </html>
