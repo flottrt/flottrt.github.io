@@ -1,115 +1,559 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Cartes en Relief des alentours du Ballon d'Alsace</title>
-<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-<link rel="stylesheet" type="text/css" href="./Qgis2threejs.css">
-<script src="./threejs/three.min.js"></script>
-<script src="./threejs/OrbitControls.js"></script>
-<script src="./Qgis2threejs.js"></script>
-</head>
-<body>
-<div id="view">
-  <div id="labels"></div>
-  <div id="northarrow"></div>
-</div>
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/filter.css">
+<link rel="stylesheet" href="css/nouislider.min.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        #map {
+            width: 1178px;
+            height: 852px;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="js/tailDT.js"></script>
+<script src="js/nouislider.min.js"></script>
+<script src="js/wNumb.js"></script>
+        <script src="data/Hutresen2009_1.js"></script>
+        <script src="data/Hutresen2011_2.js"></script>
+        <script src="data/Rcifen2009_3.js"></script>
+        <script src="data/Rcifen2011_4.js"></script>
+        <script src="data/Rcifen2013_5.js"></script>
+        <script src="data/Rcifen2014_6.js"></script>
+        <script src="data/Rcifen2017_7.js"></script>
+        <script src="data/Rcifen2019_8.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        })
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+            if (bounds_group.getLayers().length) {
+                map.fitBounds(bounds_group.getBounds());
+            }
+            map.setMaxBounds(map.getBounds());
+        }
+        map.createPane('pane_Imagearienne2019_0');
+        map.getPane('pane_Imagearienne2019_0').style.zIndex = 400;
+        var img_Imagearienne2019_0 = 'data/Imagearienne2019_0.png';
+        var img_bounds_Imagearienne2019_0 = [[46.90110756967207,-2.184169588732392],[46.909113162262216,-2.165814489462024]];
+        var layer_Imagearienne2019_0 = new L.imageOverlay(img_Imagearienne2019_0,
+                                              img_bounds_Imagearienne2019_0,
+                                              {pane: 'pane_Imagearienne2019_0'});
+        bounds_group.addLayer(layer_Imagearienne2019_0);
+        map.addLayer(layer_Imagearienne2019_0);
+        function pop_Hutresen2009_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
 
-<!-- popup -->
-<div id="popup">
-  <div id="closebtn">&times;</div>
-  <div id="popupbar"></div>
-  <div id="popupbody">
-    <div id="popupcontent"></div>
+        function style_Hutresen2009_1_0() {
+            return {
+                pane: 'pane_Hutresen2009_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(174,173,174,1.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Hutresen2009_1');
+        map.getPane('pane_Hutresen2009_1').style.zIndex = 401;
+        map.getPane('pane_Hutresen2009_1').style['mix-blend-mode'] = 'normal';
+        var layer_Hutresen2009_1 = new L.geoJson(json_Hutresen2009_1, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Hutresen2009_1',
+            layerName: 'layer_Hutresen2009_1',
+            pane: 'pane_Hutresen2009_1',
+            onEachFeature: pop_Hutresen2009_1,
+            style: style_Hutresen2009_1_0,
+        });
+        bounds_group.addLayer(layer_Hutresen2009_1);
+        map.addLayer(layer_Hutresen2009_1);
+        function pop_Hutresen2011_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
 
-    <!-- query result -->
-    <div id="queryresult">
-      <table id="qr_layername_table">
-        <caption>Layer name</caption>
-        <tr><td id="qr_layername"></td></tr>
-      </table>
+        function style_Hutresen2011_2_0() {
+            return {
+                pane: 'pane_Hutresen2011_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(18,10,1,1.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Hutresen2011_2');
+        map.getPane('pane_Hutresen2011_2').style.zIndex = 402;
+        map.getPane('pane_Hutresen2011_2').style['mix-blend-mode'] = 'normal';
+        var layer_Hutresen2011_2 = new L.geoJson(json_Hutresen2011_2, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Hutresen2011_2',
+            layerName: 'layer_Hutresen2011_2',
+            pane: 'pane_Hutresen2011_2',
+            onEachFeature: pop_Hutresen2011_2,
+            style: style_Hutresen2011_2_0,
+        });
+        bounds_group.addLayer(layer_Hutresen2011_2);
+        map.addLayer(layer_Hutresen2011_2);
+        function pop_Rcifen2009_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FID'] !== null ? autolinker.link(feature.properties['FID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
 
-      <table id="qr_coords_table">
-        <caption>Clicked coordinates</caption>
-        <tr><td id="qr_coords"></td></tr>
-      </table>
+        function style_Rcifen2009_3_0() {
+            return {
+                pane: 'pane_Rcifen2009_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(225,89,137,1.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Rcifen2009_3');
+        map.getPane('pane_Rcifen2009_3').style.zIndex = 403;
+        map.getPane('pane_Rcifen2009_3').style['mix-blend-mode'] = 'normal';
+        var layer_Rcifen2009_3 = new L.geoJson(json_Rcifen2009_3, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Rcifen2009_3',
+            layerName: 'layer_Rcifen2009_3',
+            pane: 'pane_Rcifen2009_3',
+            onEachFeature: pop_Rcifen2009_3,
+            style: style_Rcifen2009_3_0,
+        });
+        bounds_group.addLayer(layer_Rcifen2009_3);
+        map.addLayer(layer_Rcifen2009_3);
+        function pop_Rcifen2011_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Surface'] !== null ? autolinker.link(feature.properties['Surface'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
 
-      <!-- camera actions -->
-      <div class="action-btn action-zoom" onclick="app.cameraAction.zoomIn(); app.closePopup();">Zoom in here</div>
-      <div class="action-btn action-move" onclick="app.cameraAction.move(); app.closePopup();">Move here</div>
-      <div class="action-btn action-orbit" onclick="app.cameraAction.orbit(); app.closePopup();">Orbit around here</div>
+        function style_Rcifen2011_4_0() {
+            return {
+                pane: 'pane_Rcifen2011_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(243,246,27,1.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Rcifen2011_4');
+        map.getPane('pane_Rcifen2011_4').style.zIndex = 404;
+        map.getPane('pane_Rcifen2011_4').style['mix-blend-mode'] = 'normal';
+        var layer_Rcifen2011_4 = new L.geoJson(json_Rcifen2011_4, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Rcifen2011_4',
+            layerName: 'layer_Rcifen2011_4',
+            pane: 'pane_Rcifen2011_4',
+            onEachFeature: pop_Rcifen2011_4,
+            style: style_Rcifen2011_4_0,
+        });
+        bounds_group.addLayer(layer_Rcifen2011_4);
+        map.addLayer(layer_Rcifen2011_4);
+        function pop_Rcifen2013_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Surface'] !== null ? autolinker.link(feature.properties['Surface'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
 
-      <!-- attributes -->
-      <table id="qr_attrs_table">
-        <caption>Attributes</caption>
-      </table>
-    </div>
+        function style_Rcifen2013_5_0() {
+            return {
+                pane: 'pane_Rcifen2013_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(152,125,183,1.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Rcifen2013_5');
+        map.getPane('pane_Rcifen2013_5').style.zIndex = 405;
+        map.getPane('pane_Rcifen2013_5').style['mix-blend-mode'] = 'normal';
+        var layer_Rcifen2013_5 = new L.geoJson(json_Rcifen2013_5, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Rcifen2013_5',
+            layerName: 'layer_Rcifen2013_5',
+            pane: 'pane_Rcifen2013_5',
+            onEachFeature: pop_Rcifen2013_5,
+            style: style_Rcifen2013_5_0,
+        });
+        bounds_group.addLayer(layer_Rcifen2013_5);
+        map.addLayer(layer_Rcifen2013_5);
+        function pop_Rcifen2014_6(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Surface'] !== null ? autolinker.link(feature.properties['Surface'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
 
-    <!-- page info -->
-    <div id="pageinfo">
-      <h1>Current View URL</h1>
-      <div><input id="urlbox" type="text"></div>
+        function style_Rcifen2014_6_0() {
+            return {
+                pane: 'pane_Rcifen2014_6',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(231,113,72,1.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Rcifen2014_6');
+        map.getPane('pane_Rcifen2014_6').style.zIndex = 406;
+        map.getPane('pane_Rcifen2014_6').style['mix-blend-mode'] = 'normal';
+        var layer_Rcifen2014_6 = new L.geoJson(json_Rcifen2014_6, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Rcifen2014_6',
+            layerName: 'layer_Rcifen2014_6',
+            pane: 'pane_Rcifen2014_6',
+            onEachFeature: pop_Rcifen2014_6,
+            style: style_Rcifen2014_6_0,
+        });
+        bounds_group.addLayer(layer_Rcifen2014_6);
+        map.addLayer(layer_Rcifen2014_6);
+        function pop_Rcifen2017_7(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Surface'] !== null ? autolinker.link(feature.properties['Surface'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
 
-      <h1>Usage</h1>
-      <table id="usage">
-        <tr><td colspan="2" class="star">Mouse</td></tr>
-        <tr><td>Left button + Move</td><td>Orbit</td></tr>
-        <tr><td>Mouse Wheel</td><td>Zoom</td></tr>
-        <tr><td>Right button + Move</td><td>Pan</td></tr>
+        function style_Rcifen2017_7_0() {
+            return {
+                pane: 'pane_Rcifen2017_7',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(133,182,111,1.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Rcifen2017_7');
+        map.getPane('pane_Rcifen2017_7').style.zIndex = 407;
+        map.getPane('pane_Rcifen2017_7').style['mix-blend-mode'] = 'normal';
+        var layer_Rcifen2017_7 = new L.geoJson(json_Rcifen2017_7, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Rcifen2017_7',
+            layerName: 'layer_Rcifen2017_7',
+            pane: 'pane_Rcifen2017_7',
+            onEachFeature: pop_Rcifen2017_7,
+            style: style_Rcifen2017_7_0,
+        });
+        bounds_group.addLayer(layer_Rcifen2017_7);
+        map.addLayer(layer_Rcifen2017_7);
+        function pop_Rcifen2019_8(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Surface'] !== null ? autolinker.link(feature.properties['Surface'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
 
-        <tr><td colspan="2" class="star">Keys</td></tr>
-        <tr><td>Arrow keys</td><td>Move Horizontally</td></tr>
-        <tr><td>Shift + Arrow keys</td><td>Orbit</td></tr>
-        <tr><td>Ctrl + Arrow keys</td><td>Rotate</td></tr>
-        <tr><td>Shift + Ctrl + Up / Down</td><td>Zoom In / Out</td></tr>
-        <tr><td>L</td><td>Toggle Label Visibility</td></tr>
-        <tr><td>R</td><td>Start / Stop Rotate Animation (Orbiting)</td></tr>
-        <tr><td>W</td><td>Wireframe Mode</td></tr>
-        <tr><td>Shift + R</td><td>Reset Camera Position</td></tr>
-        <tr><td>Shift + S</td><td>Save Image</td></tr>
-      </table>
-
-      <h1>About</h1>
-      <div id="about">
-        This page was made with <a href="https://www.qgis.org/" target="_blank">QGIS</a> and <a href="https://github.com/minorua/Qgis2threejs" target="_blank">Qgis2threejs</a> plugin.
-        Dependent JavaScript libraries are
-        <a href="https://threejs.org/" target="_blank">three.js</a>
-        <span id="lib_proj4js"> and <a href="https://trac.osgeo.org/proj4js/" target="_blank">Proj4js</a></span>
-        .
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- progress bar -->
-<div id="progress"><div id="bar"></div></div>
-
-<!-- header and footer -->
-<div id="header"></div>
-<div id="footer"><span id="infobtn"><img src="./Qgis2threejs.png"></span> </div>
-
-<script>
-Q3D.Config.allVisible = true;
-Q3D.Config.bgColor = 0x26a5fa;
-Q3D.Config.localMode = true;
-Q3D.Config.northArrow.visible = true;
-Q3D.Config.northArrow.color = 0x666666;
-if (typeof proj4 === "undefined") document.getElementById("lib_proj4js").style.display = "none";
-
-var app = Q3D.application,
-    container = document.getElementById("view");
-
-app.init(container);           // initialize application
-
-// load the scene
-app.loadSceneFile("./data/index2/scene.js", function () {
-  app.start();
-
-  // North arrow inset
-  if (Q3D.Config.northArrow.visible) app.buildNorthArrow(document.getElementById("northarrow"), app.scene.userData.rotation);
-});
-
-document.getElementById("infobtn").onclick = app.showInfo.bind(app);
-</script>
-</body>
+        function style_Rcifen2019_8_0() {
+            return {
+                pane: 'pane_Rcifen2019_8',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(249,8,12,1.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Rcifen2019_8');
+        map.getPane('pane_Rcifen2019_8').style.zIndex = 408;
+        map.getPane('pane_Rcifen2019_8').style['mix-blend-mode'] = 'normal';
+        var layer_Rcifen2019_8 = new L.geoJson(json_Rcifen2019_8, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Rcifen2019_8',
+            layerName: 'layer_Rcifen2019_8',
+            pane: 'pane_Rcifen2019_8',
+            onEachFeature: pop_Rcifen2019_8,
+            style: style_Rcifen2019_8_0,
+        });
+        bounds_group.addLayer(layer_Rcifen2019_8);
+        map.addLayer(layer_Rcifen2019_8);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/Rcifen2019_8.png" /> Récif en 2019': layer_Rcifen2019_8,'<img src="legend/Rcifen2017_7.png" /> Récif en 2017': layer_Rcifen2017_7,'<img src="legend/Rcifen2014_6.png" /> Récif en 2014': layer_Rcifen2014_6,'<img src="legend/Rcifen2013_5.png" /> Récif en 2013': layer_Rcifen2013_5,'<img src="legend/Rcifen2011_4.png" /> Récif en 2011': layer_Rcifen2011_4,'<img src="legend/Rcifen2009_3.png" /> Récif en 2009': layer_Rcifen2009_3,'<img src="legend/Hutresen2011_2.png" /> Huîtres en 2011': layer_Hutresen2011_2,'<img src="legend/Hutresen2009_1.png" /> Huîtres en 2009': layer_Hutresen2009_1,"Image aérienne 2019": layer_Imagearienne2019_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        var mapDiv = document.getElementById('map');
+        var row = document.createElement('div');
+        row.className="row";
+        row.id="all";
+        row.style.height = "100%";
+        var col1 = document.createElement('div');
+        col1.className="col9";
+        col1.id = "mapWindow";
+        col1.style.height = "99%";
+        col1.style.width = "80%";
+        col1.style.display = "inline-block";
+        var col2 = document.createElement('div');
+        col2.className="col3";
+        col2.id = "menu";
+        col2.style.display = "inline-block";
+        mapDiv.parentNode.insertBefore(row, mapDiv);
+        document.getElementById("all").appendChild(col1);
+        document.getElementById("all").appendChild(col2);
+        col1.appendChild(mapDiv)
+        var Filters = {"id": "int"};
+        function filterFunc() {
+          map.eachLayer(function(lyr){
+          if ("options" in lyr && "dataVar" in lyr["options"]){
+            features = this[lyr["options"]["dataVar"]].features.slice(0);
+            try{
+              for (key in Filters){
+                keyS = key.replace(/[^a-zA-Z0-9_]/g, "")
+                if (Filters[key] == "str" || Filters[key] == "bool"){
+                  var selection = [];
+                  var options = document.getElementById("sel_" + keyS).options
+                  for (var i=0; i < options.length; i++) {
+                    if (options[i].selected) selection.push(options[i].value);
+                  }
+                    try{
+                      if (key in features[0].properties){
+                        for (i = features.length - 1;
+                          i >= 0; --i){
+                          if (selection.indexOf(
+                          features[i].properties[key])<0
+                          && selection.length>0) {
+                          features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                  }
+                }
+                if (Filters[key] == "int"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (parseInt(features[i].properties[key])
+                          < sliderVals[0]
+                          || parseInt(features[i].properties[key])
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "real"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (features[i].properties[key]
+                          < sliderVals[0]
+                          || features[i].properties[key]
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "date"
+                  || Filters[key] == "datetime"
+                  || Filters[key] == "time"){
+                  try{
+                    if (key in features[0].properties){
+                      HTMLkey = key.replace(/[&\/\\#,+()$~%.'":*?<>{} ]/g, '');
+                      startdate = document.getElementById("dat_" +
+                        HTMLkey + "_date1").value.replace(" ", "T");
+                      enddate = document.getElementById("dat_" +
+                        HTMLkey + "_date2").value.replace(" ", "T");
+                      for (i = features.length - 1; i >= 0; --i){
+                        if (features[i].properties[key] < startdate
+                          || features[i].properties[key] > enddate){
+                          features.splice(i,1);
+                        }
+                      }
+                    }
+                  } catch(err){
+                  }
+                }
+              }
+            } catch(err){
+            }
+          this[lyr["options"]["layerName"]].clearLayers();
+          this[lyr["options"]["layerName"]].addData(features);
+          }
+          })
+        }
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_id = document.createElement("div");
+            div_id.id = "div_id";
+            div_id.className = "slider";
+            document.getElementById("menu").appendChild(div_id);
+            var lab_id = document.createElement('div');
+            lab_id.innerHTML  = 'id: <span id="val_id"></span>';
+            lab_id.className = 'filterlabel';
+            document.getElementById("menu").appendChild(lab_id);
+            var reset_id = document.createElement('div');
+            reset_id.innerHTML = 'clear filter';
+            reset_id.className = 'filterlabel';
+            lab_id.className = 'filterlabel';
+            reset_id.onclick = function() {
+                sel_id.noUiSlider.reset();
+            };
+            document.getElementById("menu").appendChild(reset_id);
+            var sel_id = document.getElementById('div_id');
+            noUiSlider.create(sel_id, {
+                connect: true,
+                start: [0, 316],
+                step: 1,
+                format: wNumb({
+                    decimals: 0,
+                    }),
+                range: {
+                min: 0,
+                max: 316
+                }
+            });
+            sel_id.noUiSlider.on('update', function (values) {
+            filterVals =[];
+            for (value in values){
+            filterVals.push(parseInt(value))
+            }
+            val_id = document.getElementById('val_id');
+            val_id.innerHTML = values.join(' - ');
+                filterFunc()
+            });
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+        </script>
+    </body>
 </html>
